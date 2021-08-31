@@ -1,0 +1,3 @@
+.vscode
+img/favicon/*
+!img/favicon/favicon.svg
