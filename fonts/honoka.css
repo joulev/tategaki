@@ -1,6 +1,0 @@
-/* honoka.css: Load Honoka Mincho font. Taken from ni.siois.in. */
-
-@font-face {
-  font-family: "Honoka";
-  src: url("honokamin.woff") format("woff"), url("honokamin.ttf") format("truetype");
-}

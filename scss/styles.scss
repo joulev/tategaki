@@ -1,4 +1,7 @@
-@import url("../fonts/honoka.css");
+@font-face {
+  font-family: "Honoka";
+  src: url("/fonts/honokamin.woff") format("woff"), url("/fonts/honokamin.ttf") format("truetype");
+}
 
 html, body {
   ::-webkit-scrollbar { display: none; }
@@ -18,6 +21,6 @@ html, body {
 
 .container {
   margin: -1px 0 0 0;
-  background: url("../img/ruler.svg");
+  background: url("/img/ruler.svg");
   background-position: calc(100% + 12px) top;
 }
