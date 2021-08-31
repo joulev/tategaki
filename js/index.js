@@ -94,6 +94,7 @@ function check_space_dot_comma() {
 }
 
 $(() => {
+    $("#loading").show();
     // Convert text to full-width
     $(".container p").each(function () {
         let s = $(this).text();
@@ -135,12 +136,20 @@ $(() => {
     });
 
     set_container_height();
-    $(window).on("resize", set_container_height);
-
     check_space_dot_comma();
-    $(window).on("resize", check_space_dot_comma);
 
     // Remove margin at the beginning and the end of the block
     $(".container").children(":first").css("margin-block-start", "0");
     $(".container").children(":last").css("margin-block-end", "0");
+
+    $("#loading").fadeOut(200);
+
+    $(window).on("resize", () => {
+        $("#loading").fadeIn(200);
+        setTimeout(() => {
+            set_container_height();
+            check_space_dot_comma();
+            $("#loading").fadeOut(200);
+        }, 200);
+    });
 });
