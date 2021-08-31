@@ -1,7 +1,10 @@
+@import url("../fonts/honoka.css");
+
 html, body {
   ::-webkit-scrollbar { display: none; }
   -ms-overflow-style: none;
   scrollbar-width: none;
+  font-family: "Honoka", serif;
   writing-mode: vertical-rl;
   margin: 0;
 }
