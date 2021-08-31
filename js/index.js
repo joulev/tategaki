@@ -6,6 +6,8 @@ import {convert} from "./parts/convert.js";
 let start_chars = "「『［【〔｛〈《（"; // characters that should be shifted down
 let end_chars   = "」』］】〕｝〉》）。、"; // characters that should be shifted up
 
+let loading_cnt = 0;
+
 /**
  * Function set_container_height(): void -> void
  * Change height of container so that it is exactly a multiple of 23px
@@ -93,6 +95,11 @@ function check_space_dot_comma() {
     });
 }
 
+$(window).on("load", () => {
+    loading_cnt++;
+    if (loading_cnt === 2) $("#loading").fadeOut(200);
+});
+
 $(() => {
     $("#loading").show();
     // Convert text to full-width
@@ -142,7 +149,8 @@ $(() => {
     $(".container").children(":first").css("margin-block-start", "0");
     $(".container").children(":last").css("margin-block-end", "0");
 
-    $("#loading").fadeOut(200);
+    loading_cnt++;
+    if (loading_cnt === 2) $("#loading").fadeOut(200);
 
     $(window).on("resize", () => {
         $("#loading").fadeIn(200);
