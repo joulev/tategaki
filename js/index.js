@@ -95,6 +95,7 @@ function check_space_dot_comma() {
 
 $(() => {
     $("#loading").show();
+    $(".container-wrapper").hide();
     // Convert text to full-width
     $(".container p").each(function () {
         let s = $(this).text();
@@ -142,13 +143,16 @@ $(() => {
     $(".container").children(":first").css("margin-block-start", "0");
     $(".container").children(":last").css("margin-block-end", "0");
 
+    $(".container-wrapper").show();
     $("#loading").fadeOut(200);
 
     $(window).on("resize", () => {
+        $(".container-wrapper").hide();
         $("#loading").fadeIn(200);
         setTimeout(() => {
             set_container_height();
             check_space_dot_comma();
+            $(".container-wrapper").show();
             $("#loading").fadeOut(200);
         }, 200);
     });
