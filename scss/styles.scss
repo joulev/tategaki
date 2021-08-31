@@ -24,3 +24,38 @@ html, body {
   background: url("/img/ruler.svg");
   background-position: calc(100% + 12px) top;
 }
+
+p, h1, h2, h3 {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  .tategaki-character {
+    display: grid;
+    place-items: center;
+    margin-left: 12px;
+  }
+}
+
+p .tategaki-character {
+  font-size: 120%;
+  width: 23px;
+  height: 23px;
+}
+
+h1 .tategaki-character {
+  font-size: 140%;
+  width: 58px;
+  height: 46px;
+}
+
+h2 .tategaki-character {
+  font-size: 120%;
+  width: 58px;
+  height: 46px;
+}
+
+h3 .tategaki-character {
+  font-size: 120%;
+  width: 23px;
+  height: 23px;
+}

@@ -16,9 +16,25 @@ function set_container_height() {
 
 $(() => {
     // Convert text to full-width
-    $(".container *").each(function () {
+    $(".container p").each(function () {
         let s = $(this).text();
-        $(this).text(convert(s));
+        // A whitespace at the beginning
+        let html = '<div class="tategaki-character">　</div>';
+        for (let i = 0; i < s.length; i++) {
+            let char = convert(s[i]);
+            html += '<div class="tategaki-character">' + char + '</div>';
+        }
+        $(this).html(html);
+    });
+    $(".container h1, .container h2, .container h3").each(function () {
+        let s = $(this).text();
+        // A whitespace at the beginning
+        let html = "";
+        for (let i = 0; i < s.length; i++) {
+            let char = convert(s[i]);
+            html += '<div class="tategaki-character">' + char + '</div>';
+        }
+        $(this).html(html);
     });
 
     set_container_height();

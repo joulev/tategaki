@@ -6,41 +6,33 @@
 "use strict";
 
 /**
- * Function dec_code()
+ * Function dec_code(): char -> number
  * Get the decimal value of codePoint of a for easier conversion
  * 
- * @param {string} a The input _character_
+ * @param {string} a The input character
  * @returns Decimal value of codePoint of a
  */
 var dec_code = (a) => a.codePointAt(0);
 
 /**
- * Function convert()
- * Convert all half-width characters in the string to full-width characters.
+ * Function convert(): char -> char
+ * Convert the character to full-width characters.
  * 
  * Currently this only supports conversion of basic characters, namely numbers,
  * Latin characters, and (planned) some usually-used punctuations.
  * However basically every half-width characters can be added this way.
  * 
- * @param {string} s The input string
- * @returns The string after the conversion process
+ * @param {string} char The input character
+ * @returns The converted character
  */
-export function convert(s) {
-    var convert_s = "";
-    for (let i = 0; i < s.length; i++) {
-        let code_point = dec_code(s[i]);
-        // Unicode table is more generous than I expected: all are aligned perfectly
-        if (code_point >= dec_code("!") && code_point <= dec_code("~")) {
-            convert_s += String.fromCodePoint(dec_code("！") + (code_point - dec_code("!")));
-            continue;
-        }
-        // Space
-        if (s[i] == " ") {
-            convert_s += "　";
-            continue;
-        }
-        // Otherwise, it should already be a full-width character
-        convert_s += s[i];
-    }
-    return convert_s;
+export function convert(char) {
+    let code_point = dec_code(char);
+    // Unicode table is more generous than I expected: all are aligned perfectly
+    if (code_point >= dec_code("!") && code_point <= dec_code("~"))
+        return String.fromCodePoint(dec_code("！") + (code_point - dec_code("!")));
+    // Space
+    if (char == " ")
+        return "　";
+    // Otherwise, it should already be a full-width character
+    return char;
 }
