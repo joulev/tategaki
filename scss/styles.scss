@@ -1,6 +1,14 @@
-// Most important matter: vertical writing
-body {
+html, body {
+  ::-webkit-scrollbar { display: none; }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   writing-mode: vertical-rl;
+  margin: 0;
+}
+
+// Most important matter: vertical writing
+.container {
+  margin: 1cm;
   background: url("../img/ruler.svg");
   background-position: right top;
 }
