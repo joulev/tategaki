@@ -1,4 +1,6 @@
 // Most important matter: vertical writing
 body {
   writing-mode: vertical-rl;
+  background: url("../img/ruler.svg");
+  background-position: right top;
 }
