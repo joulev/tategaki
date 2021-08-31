@@ -3,6 +3,9 @@
 import $ from "./parts/jquery.js";
 import {convert} from "./parts/convert.js";
 
+let start_chars = "「『［【〔｛〈《（"; // characters that should be shifted down
+let end_chars   = "」』］】〕｝〉》）。、"; // characters that should be shifted up
+
 /**
  * Function set_container_height(): void -> void
  * Change height of container so that it is exactly a multiple of 23px
@@ -20,15 +23,15 @@ function set_container_height() {
  * to the div with CSS classes.
  * 
  * @param {string} char The input character for checking
+ * @param {number} cnt Number of "end" characters already added so far. This param
+ *                     is only necessary to position "end" characters.
  * @returns The <div> element with necessary classes added
  */
-function check_display(char) {
-    let start_chars = "「『［【〔｛〈《（"; // characters that should be shifted down
-    let end_chars   = "」』］】〕｝〉》）。、"; // characters that should be shifted up
+function check_display(char, cnt) {
     for (let i = 0; i < start_chars.length; i++)
         if (char === start_chars[i]) return '</div><div class="tategaki-character tategaki-start">' + char;
     for (let i = 0; i < end_chars.length; i++)
-        if (char === end_chars[i]) return '<div class="tategaki-end">' + char + '</div>';
+        if (char === end_chars[i]) return `<div style="position: absolute; top: ${23 - 10 + 10 * cnt}px;">${char}</div>`;
     // Normal characters INCLUDING NUMBERS: rotate the character
     // Thus, please write dates with kanji. Don't write dates with numbers in tategaki in
     // general, such writing style doesn't make sense to me.
@@ -49,7 +52,6 @@ function check_display(char) {
  * Check whether a whitespace should be added
  */
 function check_space_dot_comma() {
-    let start_chars = "「『［【〔｛〈《（";
     $(".container p").each(function() {
         let $elm_arr = $(this).children();
         for (let i = 0; i < $elm_arr.length; i++) {
@@ -97,9 +99,18 @@ $(() => {
         let s = $(this).text();
         // A whitespace at the beginning
         let html = '<div class="tategaki-character">　';
+        let cnt = 0;
         for (let i = 0; i < s.length; i++) {
             let char = convert(s[i]);
-            html += check_display(char);
+            let inside = false;
+            for (let j = 0; j < end_chars.length; j++) {
+                if (char === end_chars[j]) {
+                    inside = true;
+                    break;
+                }
+            }
+            if (inside) cnt++; else cnt = 0;
+            html += check_display(char, cnt);
         }
         $(this).html(html + "</div>");
     });
@@ -107,9 +118,18 @@ $(() => {
         let s = $(this).text();
         // A whitespace at the beginning
         let html = "";
+        let cnt = 0;
         for (let i = 0; i < s.length; i++) {
             let char = convert(s[i]);
-            html += check_display(char);
+            let inside = false;
+            for (let j = 0; j < end_chars.length; j++) {
+                if (char === end_chars[j]) {
+                    inside = true;
+                    break;
+                }
+            }
+            if (inside) cnt++; else cnt = 0;
+            html += check_display(char, cnt);
         }
         $(this).html(html + "</div>");
     });

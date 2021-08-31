@@ -34,10 +34,6 @@ p, h1, h2, h3 {
 .tategaki-start {
   place-items: center end;
 }
-.tategaki-end {
-  position: absolute;
-  top: 25px;
-}
 .tategaki-small-kana {
   // Not sure if this will even produce any effects
   place-items: flex-end center;
