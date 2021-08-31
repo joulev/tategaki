@@ -26,21 +26,69 @@ function check_display(char) {
     let start_chars = "「『［【〔｛〈《（"; // characters that should be shifted down
     let end_chars   = "」』］】〕｝〉》）。、"; // characters that should be shifted up
     for (let i = 0; i < start_chars.length; i++)
-        if (char === start_chars[i]) return '<div class="tategaki-character tategaki-start">';
+        if (char === start_chars[i]) return '</div><div class="tategaki-character tategaki-start">' + char;
     for (let i = 0; i < end_chars.length; i++)
-        if (char === end_chars[i]) return '<div class="tategaki-character tategaki-end">';
+        if (char === end_chars[i]) return '<div class="tategaki-end">' + char + '</div>';
     // Normal characters INCLUDING NUMBERS: rotate the character
     // Thus, please write dates with kanji. Don't write dates with numbers in tategaki in
     // general, such writing style doesn't make sense to me.
     if ("！".codePointAt(0) <= char.codePointAt(0) && char.codePointAt(0) <= "～".codePointAt(0)) {
-        return `<div class="tategaki-character tategaki-rotate"><span style="width: 0; content: 'ｐｈ'"></span>`;
+        return '</div><div class="tategaki-character tategaki-rotate"><div class="tategaki-rotate-character">' + char + '</div>';
     }
     // "Small" kana
     let small_kana = "ぁぃぅぇぉァィゥェォっッゃゅょャュョ";
     for (let i = 0; i < small_kana.length; i++)
-        if (char === small_kana[i]) return '<div class="tategaki-character tategaki-small-kana">';
+        if (char === small_kana[i]) return '</div><div class="tategaki-character tategaki-small-kana">' + char;
     // All normally
-    return '<div class="tategaki-character tategaki-none">';
+    return '</div><div class="tategaki-character tategaki-none">' + char;
+}
+
+/**
+ * Function check_space_dot_comma(): void -> void
+ * 
+ * Check whether a whitespace should be added
+ */
+function check_space_dot_comma() {
+    let start_chars = "「『［【〔｛〈《（";
+    $(".container p").each(function() {
+        let $elm_arr = $(this).children();
+        for (let i = 0; i < $elm_arr.length; i++) {
+            let $el = $elm_arr.eq(i);
+            if ($el.text().length > 1) {
+                let $space = $('<div class="tategaki-character">　</div>');
+                $space.insertAfter($el);
+                if ($space.offset().top - $el.offset().top < 0) $space.remove();
+                continue;
+            }
+            for (let j = 0; j < start_chars.length; j++) {
+                if ($el.text() === start_chars[j]) {
+                    let $space = $('<div class="tategaki-character">　</div>');
+                    $space.insertBefore($el);
+                    //console.log($el.text() + " " + $el.offset().top + " " + $space.offset.top());
+                    if ($el.offset().top - $space.offset().top > 0) $space.remove();
+                    break;
+                }
+            }
+            if ($el.text() === "　") {
+                if (i === 0) continue;
+                if (i === $elm_arr.length - 1) {
+                    $el.remove();
+                    continue;
+                }
+                let prev = $elm_arr.eq(i - 1).text();
+                let next = $elm_arr.eq(i + 1).text();
+                if (prev.length > 1 || next.length > 1) {
+                    $el.remove();
+                    continue;
+                }
+                if ("！".codePointAt(0) > prev.codePointAt(0) || prev.codePointAt(0) > "～".codePointAt(0) ||
+                    "！".codePointAt(0) > next.codePointAt(0) || next.codePointAt(0) > "～".codePointAt(0)) {
+                    $el.remove();
+                    continue;
+                }
+            }
+        }
+    });
 }
 
 $(() => {
@@ -48,12 +96,12 @@ $(() => {
     $(".container p").each(function () {
         let s = $(this).text();
         // A whitespace at the beginning
-        let html = '<div class="tategaki-character">　</div>';
+        let html = '<div class="tategaki-character">　';
         for (let i = 0; i < s.length; i++) {
             let char = convert(s[i]);
-            html += check_display(char) + char + "</div>";
+            html += check_display(char);
         }
-        $(this).html(html);
+        $(this).html(html + "</div>");
     });
     $(".container h1, .container h2, .container h3").each(function () {
         let s = $(this).text();
@@ -61,13 +109,16 @@ $(() => {
         let html = "";
         for (let i = 0; i < s.length; i++) {
             let char = convert(s[i]);
-            html += check_display(char) + char + "</div>";
+            html += check_display(char);
         }
-        $(this).html(html);
+        $(this).html(html + "</div>");
     });
 
     set_container_height();
     $(window).on("resize", set_container_height);
+
+    check_space_dot_comma();
+    $(window).on("resize", check_space_dot_comma);
 
     // Remove margin at the beginning and the end of the block
     $(".container").children(":first").css("margin-block-start", "0");

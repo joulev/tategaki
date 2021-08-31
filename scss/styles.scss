@@ -35,7 +35,8 @@ p, h1, h2, h3 {
   place-items: center end;
 }
 .tategaki-end {
-  place-items: center start;
+  position: absolute;
+  top: 25px;
 }
 .tategaki-small-kana {
   // Not sure if this will even produce any effects
@@ -43,7 +44,9 @@ p, h1, h2, h3 {
 }
 .tategaki-rotate {
   place-items: center;
-  transform: rotate(90deg);
+  > .tategaki-rotate-character {
+    transform: rotate(90deg);
+  }
 }
 .tategaki-none {
   place-items: center;
@@ -52,6 +55,7 @@ p, h1, h2, h3 {
 .tategaki-character {
   display: grid;
   margin-left: 12px;
+  position: relative;
 }
 
 p .tategaki-character {
