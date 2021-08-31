@@ -14,6 +14,35 @@ function set_container_height() {
     $(".container-wrapper").height(container_height);
 }
 
+/**
+ * Function check_display(): char -> string
+ * Check whether it's necessary to add additional transformation/repositioning
+ * to the div with CSS classes.
+ * 
+ * @param {string} char The input character for checking
+ * @returns The <div> element with necessary classes added
+ */
+function check_display(char) {
+    let start_chars = "「『［【〔｛〈《（"; // characters that should be shifted down
+    let end_chars   = "」』］】〕｝〉》）。、"; // characters that should be shifted up
+    for (let i = 0; i < start_chars.length; i++)
+        if (char === start_chars[i]) return '<div class="tategaki-character tategaki-start">';
+    for (let i = 0; i < end_chars.length; i++)
+        if (char === end_chars[i]) return '<div class="tategaki-character tategaki-end">';
+    // Normal characters INCLUDING NUMBERS: rotate the character
+    // Thus, please write dates with kanji. Don't write dates with numbers in tategaki in
+    // general, such writing style doesn't make sense to me.
+    if ("！".codePointAt(0) <= char.codePointAt(0) && char.codePointAt(0) <= "～".codePointAt(0)) {
+        return `<div class="tategaki-character tategaki-rotate"><span style="width: 0; content: 'ｐｈ'"></span>`;
+    }
+    // "Small" kana
+    let small_kana = "ぁぃぅぇぉァィゥェォっッゃゅょャュョ";
+    for (let i = 0; i < small_kana.length; i++)
+        if (char === small_kana[i]) return '<div class="tategaki-character tategaki-small-kana">';
+    // All normally
+    return '<div class="tategaki-character tategaki-none">';
+}
+
 $(() => {
     // Convert text to full-width
     $(".container p").each(function () {
@@ -22,7 +51,7 @@ $(() => {
         let html = '<div class="tategaki-character">　</div>';
         for (let i = 0; i < s.length; i++) {
             let char = convert(s[i]);
-            html += '<div class="tategaki-character">' + char + '</div>';
+            html += check_display(char) + char + "</div>";
         }
         $(this).html(html);
     });
@@ -32,7 +61,7 @@ $(() => {
         let html = "";
         for (let i = 0; i < s.length; i++) {
             let char = convert(s[i]);
-            html += '<div class="tategaki-character">' + char + '</div>';
+            html += check_display(char) + char + "</div>";
         }
         $(this).html(html);
     });

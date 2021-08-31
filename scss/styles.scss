@@ -29,11 +29,29 @@ p, h1, h2, h3 {
   display: flex;
   flex-wrap: wrap;
   margin: 0;
-  .tategaki-character {
-    display: grid;
-    place-items: center;
-    margin-left: 12px;
-  }
+}
+
+.tategaki-start {
+  place-items: center end;
+}
+.tategaki-end {
+  place-items: center start;
+}
+.tategaki-small-kana {
+  // Not sure if this will even produce any effects
+  place-items: flex-end center;
+}
+.tategaki-rotate {
+  place-items: center;
+  transform: rotate(90deg);
+}
+.tategaki-none {
+  place-items: center;
+}
+
+.tategaki-character {
+  display: grid;
+  margin-left: 12px;
 }
 
 p .tategaki-character {
