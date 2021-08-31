@@ -6,9 +6,15 @@ html, body {
   margin: 0;
 }
 
-// Most important matter: vertical writing
+.container-wrapper {
+  margin: 50px;
+  border-top: 1px solid #e3e3db;
+  border-bottom: 1px solid #e3e3db;
+  border-left: 1px solid #e3e3db;
+}
+
 .container {
-  margin: 1cm;
+  margin: -1px 0 0 0;
   background: url("../img/ruler.svg");
-  background-position: right top;
+  background-position: calc(100% + 12px) top;
 }
