@@ -1,3 +1,10 @@
+# user customisation
 .vscode
+
+# favicon build file (LaTeX). We only need the SVG
 img/favicon/*
 !img/favicon/favicon.svg
+
+# We ignore all generated files, however css/styles.css is needed to
+# build GH Pages, so let's include it.
+css/styles.css.map
