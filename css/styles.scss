@@ -1,3 +1,6 @@
+---
+---
+
 @font-face {
   font-family: "Honoka";
   src: url("/fonts/honokamin.woff") format("woff"), url("/fonts/honokamin.ttf") format("truetype");
@@ -22,7 +25,7 @@ html, body {
 .container {
   margin: -1px 0 0 0;
   background: url("/img/ruler.svg");
-  background-position: calc(100% + 12px) top;
+  background-position: calc(100% + 23px) top;
 }
 
 p, h1, h2, h3 {
@@ -50,7 +53,7 @@ p, h1, h2, h3 {
 
 .tategaki-character {
   display: grid;
-  margin-left: 12px;
+  margin-left: 23px;
   position: relative;
 }
 
@@ -62,18 +65,31 @@ p .tategaki-character {
 
 h1 .tategaki-character {
   font-size: 140%;
-  width: 58px;
+  width: 69px;
   height: 46px;
 }
 
 h2 .tategaki-character {
   font-size: 120%;
-  width: 58px;
+  width: 69px;
   height: 46px;
 }
 
 h3 .tategaki-character {
   font-size: 120%;
-  width: 58px;
+  width: 69px;
   height: 23px;
+}
+
+.furigana {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  font-size: 70%;
+  height: 300%;
+  left: 100%;
+  color: #777;
+}
+.furigana-crushed {
+  transform: scaleY(calc(2/3));
 }

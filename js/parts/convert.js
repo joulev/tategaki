@@ -27,11 +27,13 @@ var dec_code = (a) => a.codePointAt(0);
  */
 export function convert(char) {
     let code_point = dec_code(char);
+    if (char === "<" || char === ">")
+        return char;
     // Unicode table is more generous than I expected: all are aligned perfectly
     if (code_point >= dec_code("!") && code_point <= dec_code("~"))
         return String.fromCodePoint(dec_code("！") + (code_point - dec_code("!")));
     // Space
-    if (char == " ")
+    if (char === " ")
         return "　";
     // Otherwise, it should already be a full-width character
     return char;
