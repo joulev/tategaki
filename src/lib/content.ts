@@ -22,6 +22,15 @@ export const rawParagraphs = content.map((p) => {
   return characters;
 });
 
+export const srParagraphs = content.map((p) => {
+  let characters = "";
+  for (let i = 0; i < p.length; i++) {
+    characters += p[i];
+    if (i < p.length - 1 && p[i + 1] === FURIGANA_START) i = p.indexOf(FURIGANA_END, i + 2);
+  }
+  return characters;
+});
+
 /* Example: this is paragraphs[4]
 [
   { char: 'あ', furigana: null },

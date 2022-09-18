@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { title, rawParagraphs } from "$lib/content";
+  import { title, rawParagraphs, srParagraphs } from "$lib/content";
   import splitLine from "$lib/split-line";
 
   const MARGIN = 48;
@@ -19,7 +19,18 @@
   window.addEventListener("resize", main);
 </script>
 
-<div class="m-12 border border-neutral-200 text-base" style="height: {height}px">
+<div class="sr-only">
+  <h1>{title}</h1>
+  {#each srParagraphs as p}
+    <p>{p}</p>
+  {/each}
+</div>
+
+<div
+  aria-hidden
+  class="not-sr-only m-12 border border-neutral-200 text-base"
+  style="height: {height}px"
+>
   <div class="flex flex-col gap-12 -m-px" style="background: url('/ruler.svg');">
     <h1 class="flex flex-row">
       {#each title.split("") as char}
