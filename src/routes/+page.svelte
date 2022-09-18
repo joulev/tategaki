@@ -32,7 +32,10 @@
           <span class="flex flex-row">
             {#each line as { char, furigana }}
               <span class="h-6 w-6 mr-6 grid place-items-center relative">
-                {char}
+                {char[0]}
+                {#if char.length > 1}
+                  <span class="absolute top-full left-0">{char[1]}</span>
+                {/if}
                 {#if furigana}
                   <span class="absolute left-full top-1/2 -translate-y-1/2">
                     <span

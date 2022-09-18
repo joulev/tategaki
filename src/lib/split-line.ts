@@ -12,6 +12,11 @@ export default function splitLine(paragraph: RawParagraph, height: number): Para
       line = [char];
       continue;
     }
+    if (line.length === 0 && END_CHARS.includes(char.char)) {
+      const prevLineLength = lines[lines.length - 1].length;
+      lines[lines.length - 1][prevLineLength - 1].char += char.char;
+      continue;
+    }
     line.push(char);
     if (line.length === height) {
       lines.push(line);
