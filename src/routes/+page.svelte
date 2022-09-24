@@ -26,11 +26,13 @@
   {/each}
 </div>
 
-<div
-  aria-hidden
-  class="not-sr-only m-12 border border-neutral-200 text-base"
-  style="height: {height}px"
->
+<div {height} class="m-12 w-9">
+  <a href="https://joulev.dev" target="_blank" rel="noopener noreferrer" class="inline-block">
+    <img src="/tategaki.joulev.svg" alt="tategaki at joulev.dev" width="36" />
+  </a>
+</div>
+
+<div aria-hidden class="not-sr-only m-12 border border-neutral-200 text-base" {height}>
   <div class="flex flex-col gap-12 -m-px" style="background: url('/ruler.svg');">
     <h1 class="flex flex-row">
       {#each title.split("") as char}
